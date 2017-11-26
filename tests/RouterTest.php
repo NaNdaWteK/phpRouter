@@ -10,7 +10,7 @@ final class RouterTest extends TestCase
 {
     public $router;
     public $response;
-    const CONTROLLER = 'avatar';
+    const NAMESPACE = 'avatar';
     const METHOD = 'get';
     const PARAMS = ['1'];
     public function setUp()
@@ -34,6 +34,12 @@ final class RouterTest extends TestCase
 
         $this->assertEquals($property, self::METHOD);
     }
+    public function testNamespace()
+    {
+        $property = $this->getPrivateProperty( $this->router, 'namespace' );
+
+        $this->assertEquals($property, self::NAMESPACE);
+    }
     public function testParams()
     {
         $property = $this->getPrivateProperty( $this->router, 'params' );
@@ -45,9 +51,9 @@ final class RouterTest extends TestCase
         $expectedValue = json_encode(['id' => 1, 'name' => "Nacho", 'surname' => "Benítez"]);
 
         $mockRouter = Mockery::mock($this->router);
-        $mockRouter->shouldReceive('doRequest')->with(self::CONTROLLER, self::METHOD)->andReturn($expectedValue);
+        $mockRouter->shouldReceive('doRequest')->with(self::NAMESPACE, self::METHOD)->andReturn($expectedValue);
 
-        $this->assertEquals($mockRouter->doRequest(self::CONTROLLER, self::METHOD), $expectedValue);
+        $this->assertEquals($mockRouter->doRequest(self::NAMESPACE, self::METHOD), $expectedValue);
     }
     public function testRequestNotFound()
     {
