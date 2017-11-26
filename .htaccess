@@ -1,0 +1,6 @@
+# Avoid view folder content
+Options All -Indexes
+
+# Friendly URL
+RewriteEngine On
+RewriteRule ^([-a-zA-Z0-9/]+)$ index.php?url=$1
